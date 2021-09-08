@@ -35,5 +35,5 @@ const react_schema=new schema(
     }
 );
 
-const Reaction=model('reaction',react_schema)
+const Reaction=model('Reaction',react_schema)
 module.exports=Reaction;
