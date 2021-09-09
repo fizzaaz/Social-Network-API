@@ -40,19 +40,25 @@ const userController = {
     },
 
     // PUT to update a user by its _id
-    updateUserById({params,body},res){
-User.findOneAndUpdate({_id:params.id},body,{new:true})//new:true returns the updated version
-.then(dbUserData => {
-    if (!dbUserData) {
-        res.status(404).json({ message: 'Opps! No user found with this id!' });
-        return;
+    updateUserById({ params, body }, res) {
+        User.findOneAndUpdate({ _id: params.id }, body, { new: true })//new:true returns the updated version
+            .then(dbUserData => {
+                if (!dbUserData) {
+                    return res.status(404).json({ message: 'Opps! No user found with this id!' });
+                }
+                res.json(dbUserData);
+            })
+            .catch(err => {
+                console.log(err);
+                res.status(400).json(err)
+            });
     }
-    res.json(dbUserData);
-})
-.catch(err => {
-    console.log(err);
-    res.status(400).json(err)
-});    }
 
+// DELETE to remove user by its _id
+deleteUserById({params},res)
+{
+    User.findOneAndDelete({_id:params.id})
+    .then()
+}
 
 }
