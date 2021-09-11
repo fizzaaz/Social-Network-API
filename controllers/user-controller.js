@@ -1,4 +1,3 @@
-const { createSecureServer } = require('http2');
 const { User, Thought } = require('../models');
 
 const userController = {
