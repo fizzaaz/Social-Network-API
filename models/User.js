@@ -1,8 +1,8 @@
 //Dependencies
-const { schema, model } = require('mongoose');
+const {  model, Schema } = require('mongoose');
 
 //Creates the user schema
-const user_schema = new schema(
+const user_schema = new Schema(
     {
         username:
         {
@@ -20,12 +20,12 @@ const user_schema = new schema(
         },
         thoughts:[
         {
-            type: schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'Thought'
         }],
         friends: [
         {
-            type: schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: 'User'
         }
         ]
