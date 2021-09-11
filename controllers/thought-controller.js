@@ -59,16 +59,29 @@ const thoughtController = {
             });
     
     },
-    // remove thought
-    removeThought({ params }, res) {
-        Thought.findOneAndDelete({ _id: params.thoughtId })
+//UT to update a thought by its _id
+    updateThoughtbyId({ params, body }, res) {
+        Thought.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
+            .then(dbThoughtData => {
+                if (!dbThoughtData) {
+                    res.status(404).json({ message: 'Opps!, No thoughts found with this id!' });
+                    return;
+                }
+                res.json(dbThoughtData);
+            })
+            .catch(err => res.status(400).json(err));
+    },
+
+    // DELETE to remove a thought by its _id
+   removeThoughtById({ params }, res) {
+        Thought.findOneAndDelete({ _id: params.id })
             .then(deletedthought => {
                 if (!deletedthought) {
                     return res.status(404).json({ message: 'No thought with this id!' });
                 }
                 return User.findOneAndUpdate(
                     { _id: params.username },
-                    { $pull: { thoughts: params.thoughtId } },
+                    { $pull: { thoughts: params.id } },
                     { new: true }
                 );
             })
@@ -77,6 +90,7 @@ const thoughtController = {
             })
             .catch(err => res.json(err));
     },
+
     addReaction({ params, body }, res) {
         Thought.findOneAndUpdate(
             { _id: params.thoughtId },
