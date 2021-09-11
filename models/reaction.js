@@ -1,11 +1,11 @@
-const {schema,model}=require('mongoose');
+const {Schema,model}=require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
-const react_schema=new schema(
+const react_schema=new Schema(
     {
         reactionId:
         {
-            id:schema.Types.ObjectId,
+            id:Schema.Types.ObjectId,
             default:()=>new Types.ObjectId
         },
         reactionBody:
