@@ -52,13 +52,74 @@ const userController = {
                 console.log(err);
                 res.status(400).json(err)
             });
-    }
+    },
 
 // DELETE to remove user by its _id
 deleteUserById({params},res)
 {
     User.findOneAndDelete({_id:params.id})
-    .then()
+    .then(dbUserData => {   
+         if (!dbUserData) {
+            return res.status(404).json({ message: 'Opps! No user found with this id!' });
+        }
+// BONUS: Remove a user's associated thoughts when deleted.
+User.updateMany(//remove friend from a user list
+    { _id: { $in: dbUserData.friends } },
+    { $pull: { friends: params.id } }
+  )
+    .then(() => {
+      Thought.deleteMany({ username: dbUserData.username })
+        .then(() => {
+          res.json({ message: "Successfully deleted user" });
+        })
+        .catch((err) => res.status(400).json(err));
+    })
+    .catch((err) => res.status(400).json(err));
+})
+.catch((err) => res.status(400).json(err));
+},
+   
+///api/users/:userId/friends/:friendId
+// POST to add a new friend to a user's friend list
+addFriendtoList({params},res)
+{
+User.findOneAndUpdate(
+    { _id: params.id },
+    { $addToSet: { friends: params.friendId } },
+    { new: true, runValidators: true })
+    .then(dbUserData => {
+        if (!dbUserData) {
+            return res.status(404).json({ message: 'Opps! No user found with this id!' });
+        }
+        res.json(dbUserData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err)
+    });
+},
+//DELETE to remove a friend from a user's friend list
+removeFriend({params},res){
+    User.findOneAndUpdate(
+        {_id:params.id },
+        {$pull:{friends:params.friendId}},
+        {new:true,runValidators:true}
+    )
+    .then(dbUserData => {
+        if (!dbUserData) {
+            return res.status(404).json({ message: 'Opps! No user found with this id!' });
+        }
+        res.json(dbUserData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(400).json(err)
+    });
 }
+
+
+},
+
+
 
 }
