@@ -5,8 +5,8 @@ const react_schema=new Schema(
     {
         reactionId:
         {
-            id:Schema.Types.ObjectId,
-            default:()=>new Types.ObjectId
+            type: Schema.Types.ObjectId,
+            default: () => new Types.ObjectId
         },
         reactionBody:
         {
@@ -16,7 +16,7 @@ const react_schema=new Schema(
         },
         username:
         {
-            String:true,
+            type:String,
             required:true
         },
         createdAt:
