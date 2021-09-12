@@ -106,7 +106,7 @@ const userController = {
                 if (!dbUserData) {
                     return res.status(404).json({ message: 'Opps! No user found with this id!' });
                 }
-                res.json(dbUserData);
+                res.json({ message: 'Sucessfully removed friends '})
             })
             .catch(err => {
                 console.log(err);

@@ -20,7 +20,7 @@ router.route('/:id')
 .put(updateUserById)
 .delete(deleteUserById)
 
-router.route(':userId/friends/:friendId')
+router.route('/:userId/friends/:friendId')
 .post(addFriendtoList)
 .delete(removeFriend)
 
