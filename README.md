@@ -30,6 +30,8 @@ In this app, I have created an API for a social network web application where us
 ✋ [GitHub Repository](https://github.com/fizzaaz/Social-Network-API)
 
 ![Screen Shot](./assets/images/ss.JPG)
+![Screen Shot](./assets/DEMO.gif)
+
 
 ## ✋User Requirements
 

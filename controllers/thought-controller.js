@@ -87,7 +87,7 @@ const thoughtController = {
     })
     .then(dbUserData => {
         if (!dbUserData) {
-            res.status(404).json({ message: 'No user found with this id!' });
+            res.json({ message: "Successfully DELETED REACTION" });
             return;
         }
         res.json(dbUserData);
